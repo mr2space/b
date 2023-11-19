@@ -24,8 +24,11 @@ def showphoto(request):
     username = request.user.username
     user = User.objects.get(username=username)
     user_groups = user.groups.all()
-    user_group = user_groups[0]
-    photos = Photos.objects.all().filter(category = user_group.name)
+    photos = []
+    for u in user_groups:
+        p = Photos.objects.all().filter(category = u.name)
+        for photo in  p:
+            photos.append(photo)
     p = []
     for i in photos:
         p.append(i.photo.url)
